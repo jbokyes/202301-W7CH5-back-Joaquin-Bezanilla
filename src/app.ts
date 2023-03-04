@@ -4,8 +4,11 @@ import cors from 'cors';
 import createDebug from 'debug';
 import { CustomError } from './errors/errors.js';
 import { userRouter } from './router/user.router.js';
-const debug = createDebug('W7:app');
+
+const debug = createDebug('challenge:app');
+
 export const app = express();
+
 app.disable('x-powered-by');
 
 const corsOptions = {
@@ -15,17 +18,8 @@ const corsOptions = {
 app.use(morgan('dev')); // Pendiente a averiguar que hace morgan exactamente
 app.use(express.json()); // ?? Que hace este express exactamente?
 app.use(cors(corsOptions));
-app.use('users');
-app.get('/', (_req, resp) => {
-  resp.json({
-    info: 'Week7-Challenge5, Social Network',
-    endpoints: {
-      users: '/users',
-    },
-  });
-});
-
 app.use('/users', userRouter);
+
 app.get('/', (_req, resp) => {
   resp.json({
     info: "The most complex social network you'll ever encounter",
@@ -55,3 +49,5 @@ app.use(
     debug(status, statusMessage, error.message);
   }
 );
+
+app.use(express.static('public'));
