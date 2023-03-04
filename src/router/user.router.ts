@@ -1,1 +1,10 @@
 import { Router } from 'express';
+import { UsersController } from '../controller/users.controller';
+import { UsersMongoRepo } from '../repository/user.mongo.repo';
+
+export const userRouter = Router();
+const repoUsers = new UsersMongoRepo();
+const controller = new UsersController(repoUsers);
+
+userRouter.get('/', controller.getAllUsers.bind(controller));
+userRouter.get('/:id', controller.getUser.bind(controller));

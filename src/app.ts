@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import createDebug from 'debug';
 import { CustomError } from './errors/errors.js';
+import { userRouter } from './router/user.router.js';
 const debug = createDebug('W7:app');
 export const app = express();
 app.disable('x-powered-by');
@@ -24,6 +25,15 @@ app.get('/', (_req, resp) => {
   });
 });
 
+app.use('/users', userRouter);
+app.get('/', (_req, resp) => {
+  resp.json({
+    info: "The most complex social network you'll ever encounter",
+    current_endpoints: {
+      users: '/users',
+    },
+  });
+});
 // Middleware de errores
 app.use(
   (error: CustomError, _req: Request, resp: Response, _next: NextFunction) => {
