@@ -27,4 +27,41 @@ export class UsersMongoRepo implements UserRepo<User> {
       );
     return data;
   }
+
+  async search(query: { key: string; value: unknown }): Promise<User[]> {
+    debug('search');
+    const data = UserModel.find({ [query.key]: query.value });
+    return data;
+  }
+
+  async create(info: Partial<User>): Promise<User> {
+    debug('create' + info.email);
+    const data = await UserModel.create(info);
+    return data;
+  }
+
+  async update(info: Partial<User>): Promise<User> {
+    debug('update ' + info.name);
+    const data = await UserModel.findByIdAndUpdate(info.id, info, {
+      new: true,
+    });
+    if (!data)
+      throw new HTTPError(
+        404,
+        'Email not found!',
+        'Email not found in update!'
+      );
+    return data;
+  }
+
+  async delete(id: string): Promise<void> {
+    debug('delete: ' + id);
+    const data = await UserModel.findByIdAndDelete(id);
+    if (!data)
+      throw new HTTPError(
+        404,
+        'Delete not possible',
+        'Id not found for annihilation of account'
+      );
+  }
 }
