@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import createDebug from 'debug';
-import { CustomError } from './errors/errors';
+import { CustomError } from './errors/errors.js';
 const debug = createDebug('W7:app');
 export const app = express();
 app.disable('x-powered-by');

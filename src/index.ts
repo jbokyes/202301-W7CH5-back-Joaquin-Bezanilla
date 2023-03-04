@@ -1,7 +1,7 @@
 import createDebug from 'debug';
 import http from 'http';
-import { app } from './app';
-import { dbConnect } from './db/connect.db';
+import { app } from './app.js';
+import { dbConnect } from './db/connect.db.js';
 
 const debug = createDebug('W7-CH5:index');
 
