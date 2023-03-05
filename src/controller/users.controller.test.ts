@@ -91,7 +91,7 @@ describe('Given UsersController', () => {
       const req = {
         body: { email: 'a', passwd: 'a', id: '' },
       } as unknown as Request;
-      (repo.queryId as jest.Mock).mockRejectedValue(new Error());
+      (repo.queryId as jest.Mock).mockResolvedValue([]);
       await controller.getUser(req, resp, next);
       expect(repo.queryId).toHaveBeenCalled();
       expect(next).toHaveBeenCalled();
