@@ -25,10 +25,11 @@ export class UsersController {
 
   async getUser(req: Request, resp: Response, next: NextFunction) {
     try {
-      debug('get');
+      debug('get specific id');
       const data = await this.repo.queryId(req.params.id);
+      console.log(req.params);
       resp.json({
-        results: [data],
+        results: data,
       });
     } catch (error) {
       next(error);
