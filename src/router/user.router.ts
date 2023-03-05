@@ -11,4 +11,4 @@ userRouter.get('/', controller.getAllUsers.bind(controller));
 userRouter.get('/:id', controller.getUser.bind(controller));
 userRouter.post('/register', controller.register.bind(controller));
 userRouter.post('/login', controller.login.bind(controller));
-// userRouter.patch('/addFriend', controller.addFriend.bind(controller));
+userRouter.patch('/addFriend/:id', controller.addFriend.bind(controller));

@@ -88,7 +88,7 @@ describe('Given UsersController', () => {
     });
     test('Then it should no tengo idea if there are any errors', async () => {
       const req = {
-        body: { email: 'a', passwd: 'a', id: '' },
+        params: { email: 'a', passwd: 'a', id: '' },
       } as unknown as Request;
       (repo.queryId as jest.Mock).mockResolvedValue([]);
       await controller.getUser(req, resp, next);
@@ -96,5 +96,43 @@ describe('Given UsersController', () => {
       expect(next).toHaveBeenCalled();
     });
     // QUÉ LE PASA A ESTE TEST???? !!!!!
+  });
+  describe('When addFriend is called', () => {
+    test('then if the user information is completed, it should return the resp.json', async () => {
+      const req = {
+        info: { id: '1' },
+        params: { id: '1' },
+      } as unknown as Request;
+
+      (repo.queryId as jest.Mock).mockResolvedValue({
+        friends: [{ id: '1' }],
+        id: '2',
+      });
+
+      await controller.addFriend(req, resp, next);
+      expect(repo.queryId).toHaveBeenCalled();
+      /* Función que debiese ser llamada pero no sé como llegar a ella
+      expect(repo.update).toHaveBeenCalled();*/
+      expect(resp.json).toHaveBeenCalled();
+    });
+    test('Then if the req.params.id is undefined, it should be catch the error and next function have been called', async () => {
+      const req = {
+        body: { id: undefined },
+      } as unknown as Request;
+
+      await controller.addFriend(req, resp, next);
+      expect(next).toHaveBeenCalled();
+    });
+    test('Then if the queryId of the repoMock resolved undefined, it should be catch the error and next function have been called', async () => {
+      const req = {
+        info: { id: '1' },
+        params: { id: '1' },
+      } as unknown as Request;
+
+      (repo.queryId as jest.Mock).mockResolvedValue(undefined);
+
+      await controller.addFriend(req, resp, next);
+      expect(next).toHaveBeenCalled();
+    });
   });
 });
