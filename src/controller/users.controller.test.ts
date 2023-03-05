@@ -80,8 +80,7 @@ describe('Given UsersController', () => {
   describe('Given the getUser function', () => {
     test('It should return one object with the information of a single user', async () => {
       const req = {
-        body: { email: 'a', passwd: 'a', id: '1' },
-        id: '1',
+        params: { id: '1' },
       } as unknown as Request;
       await controller.getUser(req, resp, next);
       expect(repo.queryId).toHaveBeenCalled();
