@@ -1,7 +1,7 @@
 import createDebug from 'debug';
 import { NextFunction, Response, Request } from 'express';
 import { User } from '../entities/user';
-import { HTTPError } from '../errors/errors';
+import { HTTPError } from '../errors/errors.js';
 import { UserRepo } from '../repository/repo.interface';
 
 const debug = createDebug('challenge:Controller-users');

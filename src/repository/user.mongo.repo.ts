@@ -3,7 +3,7 @@ import { UserModel } from './user.mongo.model.js';
 import { User } from '../entities/user.js';
 import { UserRepo } from './repo.interface';
 import { HTTPError } from '../errors/errors.js';
-const debug = createDebug('W7-CH5:user-mongo-repo');
+const debug = createDebug('challenge:user-mongo-repo');
 
 export class UsersMongoRepo implements UserRepo<User> {
   public constructor() {
