@@ -70,4 +70,46 @@ export class UsersController {
       next(error);
     } // Agregar Auth cuando esté listo
   }
+
+  async addFriend(req: Request, resp: Response, next: NextFunction) {
+    try {
+      debug('addFriend!');
+      if (!req.body.id) {
+        throw new HTTPError(
+          404,
+          'Enter a valid ID',
+          'Undefined ID, check process'
+        );
+      }
+      //Buscar id de persona que quiero agregar (yo)
+      const addingUserId = await this.repo.queryId(req.params.id);
+      // Buscar persona que quiero agregar (él)
+      const addedUserId = await this.repo.queryId(req.body.id);
+      //Ward
+      if (!addingUserId.friends)
+        throw new HTTPError(
+          404,
+          'User not found',
+          'User adding friendlist not found'
+        );
+      if (!addedUserId.friends)
+        throw new HTTPError(
+          404,
+          'User not found',
+          'User being added friendlist being added id not found'
+        );
+      //Al agregarse, cada uno aparece en la friendlist del otro
+      addingUserId.friends.push(addedUserId);
+      addedUserId.friends.push(addingUserId);
+      const updatedUser = await this.repo.update(addingUserId);
+      await this.repo.update(addedUserId);
+      debug('Friendship confirmed');
+
+      resp.json({
+        results: [updatedUser],
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

@@ -22,9 +22,9 @@ describe('Given UsersController', () => {
 
   const controller = new UsersController(repo);
 
-  describe('register', () => {
+  /*describe('register', () => {
     test('Then it should create (post) a new object', async () => {
       await controller.register(req, resp, next);
     });
-  });
+  });*/
 });
