@@ -53,11 +53,12 @@ export class UsersController {
   async login(req: Request, resp: Response, next: NextFunction) {
     try {
       debug('login-post');
-      if (!req.body.email || req.body.passwd)
+      const { email, passwd } = req.body;
+      if (!email || !passwd)
         throw new HTTPError(403, 'Unauthorized', 'Invalid email or password');
       const data = await this.repo.search({
         key: 'email',
-        value: req.body.email,
+        value: email,
       });
       if (!data.length)
         throw new HTTPError(403, 'Unauthorized', 'Email not found');
@@ -66,6 +67,7 @@ export class UsersController {
           data,
         },
       });
+      debug('Login done by: ' + email);
     } catch (error) {
       next(error);
     } // Agregar Auth cuando esté listo
