@@ -4,6 +4,7 @@ import cors from 'cors';
 import createDebug from 'debug';
 import { CustomError } from './errors/errors.js';
 import { userRouter } from './router/user.router.js';
+import { errorsMiddleware } from './middlewares/errors.middleware.js';
 
 const debug = createDebug('challenge:app');
 
@@ -29,25 +30,6 @@ app.get('/', (_req, resp) => {
   });
 });
 // Middleware de errores
-app.use(
-  (error: CustomError, _req: Request, resp: Response, _next: NextFunction) => {
-    debug(
-      'Soy el middleware de errores! Verifica el código o lo que ingresaste!'
-    );
-    const status = error.statusCode || 500;
-    const statusMessage =
-      error.statusMessage || 'Interal server error, nuestro favorito';
-    resp.status(status);
-    resp.json({
-      error: [
-        {
-          status,
-          statusMessage,
-        },
-      ],
-    });
-    debug(status, statusMessage, error.message);
-  }
-);
+app.use(errorsMiddleware);
 
 app.use(express.static('public'));

@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "copy-public": "copyfiles -u 1 src/public/**/*.* dist",
+    "copy:public": "copyfiles -u 1 src/public/**/*.* dist",
     "start": "cross-env DEBUG=challenge* PORT=4200 node ./dist/index.js -w",
     "start:mon": "cross-env DEBUG=challenge* PORT=4200 nodemon ./dist/index.js",
     "prebuild": "npm run copy:public",
